@@ -1,6 +1,7 @@
 // Import our CSS
 import '@/css/app.pcss';
 
+// JavaScript
 import '@/js/Campaign.js';
 import '@/js/Cp.js';
 import '@/js/CampaignIndex.js';

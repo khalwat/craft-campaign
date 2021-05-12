@@ -16,8 +16,14 @@
     {% set tabs = tabs|merge({'report': {'label': 'Report'|t('campaign'), 'url': '#report'}}) %}
 {% endif %}
 
-{% do view.registerAssetBundle('putyourlightson\\campaign\\assets\\ContactEditAsset') %}
-{% do view.registerAssetBundle('putyourlightson\\campaign\\assets\\ReportsAsset') %}
+{% set scriptTagOptions = {
+    'depends': [
+        'putyourlightson\\campaign\\assets\\CampaignAsset'
+    ],
+} %}
+{% do craft.campaign.register('/src/js/app.ts', false, scriptTagOptions) %}
+{% do craft.campaign.register('/src/js/reports.ts', false, scriptTagOptions) %}
+{% do craft.campaign.register('/src/js/ContactEditAsset.js', false, scriptTagOptions) %}
 
 
 {% block actionButton %}

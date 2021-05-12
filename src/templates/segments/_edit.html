@@ -6,8 +6,13 @@
     { label: segment.segmentTypes[segment.segmentType], url: url('campaign/segments/' ~ segment.segmentType) }
 ] %}
 
-{% do view.registerAssetBundle('putyourlightson\\campaign\\assets\\SegmentEditAsset') %}
-
+{% set scriptTagOptions = {
+    'depends': [
+        'putyourlightson\\campaign\\assets\\CampaignAsset'
+    ],
+} %}
+{% do craft.campaign.register('/src/js/app.ts', false, scriptTagOptions) %}
+{% do craft.campaign.register('/src/js/SegmentEditAsset.js', false, scriptTagOptions) %}
 
 {% block contextMenu %}
 

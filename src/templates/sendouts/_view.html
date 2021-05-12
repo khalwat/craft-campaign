@@ -16,7 +16,13 @@
 {% set mailingLists = sendout.mailingLists %}
 {% set schedule = sendout.schedule %}
 
-{% do view.registerAssetBundle('putyourlightson\\campaign\\assets\\SendoutEditAsset') %}
+{% set scriptTagOptions = {
+    'depends': [
+        'putyourlightson\\campaign\\assets\\CampaignAsset'
+    ],
+} %}
+{% do craft.campaign.register('/src/js/app.ts', false, scriptTagOptions) %}
+{% do craft.campaign.register('/src/js/SendoutEditAsset.js', false, scriptTagOptions) %}
 
 
 {% block pageTitle %}

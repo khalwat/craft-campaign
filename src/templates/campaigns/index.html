@@ -2,6 +2,13 @@
 
 {% set elementType = 'putyourlightson\\campaign\\elements\\CampaignElement' %}
 
+{% set elementInstance = craft.app.elements.createElement(elementType) %}
+{% set context = 'index' %}
+
+{% if not elementInstance %}
+{% exit 404 %}
+{% endif %}
+
 {% set title = 'Campaigns'|t('campaign') %}
 {% set selectedSubnavItem = 'campaigns' %}
 
@@ -9,4 +16,19 @@
     {% if campaignTypeHandle is defined %}
         window.defaultCampaignTypeHandle = '{{ campaignTypeHandle }}';
     {% endif %}
+{% endjs %}
+
+{% block initJs %}
+{% endblock initJs %}
+
+{% js on load %}
+    Craft.elementIndex = Craft.createElementIndex('{{ elementType|e("js") }}', $('#page-container'), {
+    elementTypeName: '{{ elementInstance.displayName()|e("js") }}',
+    elementTypePluralName: '{{ elementInstance.pluralDisplayName()|e("js") }}',
+    context: '{{ context }}',
+    storageKey: 'elementindex.{{ elementType|e("js") }}',
+    criteria: Craft.defaultIndexCriteria,
+    toolbarSelector: '#toolbar',
+    canHaveDrafts: {{ (canHaveDrafts ?? false) ? 'true' : 'false' }},
+});
 {% endjs %}

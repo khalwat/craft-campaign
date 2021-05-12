@@ -31,7 +31,6 @@ use craft\services\Utilities;
 use craft\web\UrlManager;
 use craft\web\twig\variables\CraftVariable;
 use putyourlightson\campaign\assets\CampaignAsset;
-use putyourlightson\campaign\assets\UniversalAsset;
 use putyourlightson\campaign\controllers\TrackerController;
 use putyourlightson\campaign\elements\CampaignElement;
 use putyourlightson\campaign\elements\ContactElement;
@@ -90,6 +89,7 @@ use nystudio107\pluginvite\services\VitePluginService;
  * @property SyncService $sync
  * @property TrackerService $tracker
  * @property WebhookService $webhook
+ * @property VitePluginService $vite
  * @property Mailer $mailer
  * @property array|null $cpNavItem
  * @property array $cpRoutes
@@ -204,7 +204,7 @@ class Campaign extends Plugin
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
             // Register universal CSS
-            Craft::$app->view->registerAssetBundle(UniversalAsset::class);
+            $this->vite->register('/src/js/universal.ts', false);
 
             // Register CP URL rules event
             Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES,

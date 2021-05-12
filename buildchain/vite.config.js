@@ -9,6 +9,12 @@ export default ({ command }) => ({
     rollupOptions: {
       input: {
         app: '/src/js/app.ts',
+        CampaignEdit: '/src/js/CampaignEdit.js',
+        reports: '/src/js/reports.ts',
+        SegmentEdit: '/src/js/SegmentEdit.js',
+        SegmentIndex: '/src/js/SegmentIndex.js',
+        SendOutIndex: '/src/js/SendOutIndex.js',
+        universal: '/src/js/universal.ts',
       },
       output: {
         sourcemap: true
