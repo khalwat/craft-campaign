@@ -28,6 +28,7 @@ use Craft;
 use craft\helpers\Template;
 use Twig\Markup;
 use yii\web\ForbiddenHttpException;
+use nystudio107\pluginvite\variables\ViteVariable;
 
 /**
  * CampaignVariable
@@ -36,7 +37,7 @@ use yii\web\ForbiddenHttpException;
  * @package   Campaign
  * @since     1.0.0
  */
-class CampaignVariable
+class CampaignVariable extends ViteVariable
 {
     // Public Methods
     // =========================================================================

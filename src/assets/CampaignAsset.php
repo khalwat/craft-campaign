@@ -18,24 +18,10 @@ class CampaignAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = '@putyourlightson/campaign/resources';
+        $this->sourcePath = '@putyourlightson/campaign/../buildchain/dist';
 
         $this->depends = [
             CpAsset::class,
-        ];
-
-        // define the relative path to CSS/JS files that should be registered with the page when this asset bundle is registered
-        $this->css = [
-            'css/cp.css',
-            'css/flag-icon.min.css',
-        ];
-        $this->js = [
-            'js/Campaign.js',
-            'js/Cp.js',
-            'js/CampaignIndex.js',
-            'js/MailingListIndex.js',
-            'js/SegmentIndex.js',
-            'js/SendoutIndex.js',
         ];
 
         parent::init();

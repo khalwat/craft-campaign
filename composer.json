@@ -18,6 +18,7 @@
     "require": {
         "craftcms/cms": "^3.1.20",
         "putyourlightson/craft-log-to-file": "^1.2.3",
+        "nystudio107/craft-plugin-vite": "^1.0.0",
         "matomo/device-detector": "^3.9.1",
         "html2text/html2text": "^4.3.1",
         "elvanto/litemoji": "^1.4.4|^2.0.4|^3.0.1|^4.0.0",

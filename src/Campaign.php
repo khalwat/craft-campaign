@@ -30,6 +30,7 @@ use craft\services\UserPermissions;
 use craft\services\Utilities;
 use craft\web\UrlManager;
 use craft\web\twig\variables\CraftVariable;
+use putyourlightson\campaign\assets\CampaignAsset;
 use putyourlightson\campaign\assets\UniversalAsset;
 use putyourlightson\campaign\controllers\TrackerController;
 use putyourlightson\campaign\elements\CampaignElement;
@@ -64,6 +65,7 @@ use putyourlightson\campaign\variables\CampaignVariable;
 use putyourlightson\logtofile\LogToFile;
 use yii\base\Event;
 use yii\web\ForbiddenHttpException;
+use nystudio107\pluginvite\services\VitePluginService;
 
 /**
  * Campaign plugin
@@ -117,6 +119,42 @@ class Campaign extends Plugin
     /**
      * @inheritdoc
      */
+    public function __construct($id, $parent = null, array $config = [])
+    {
+        $config['components'] = [
+            'campaigns' => CampaignsService::class,
+            'campaignTypes' => CampaignTypesService::class,
+            'contacts' => ContactsService::class,
+            'exports' => ExportsService::class,
+            'forms' => FormsService::class,
+            'imports' => ImportsService::class,
+            'mailingLists' => MailingListsService::class,
+            'mailingListTypes' => MailingListTypesService::class,
+            'pendingContacts' => PendingContactsService::class,
+            'reports' => ReportsService::class,
+            'segments' => SegmentsService::class,
+            'sendouts' => SendoutsService::class,
+            'settings' => SettingsService::class,
+            'sync' => SyncService::class,
+            'tracker' => TrackerService::class,
+            'webhook' => WebhookService::class,            // Register the vite service
+            'vite' => [
+                'class' => VitePluginService::class,
+                'assetClass' => CampaignAsset::class,
+                'useDevServer' => true,
+                'devServerPublic' => 'http://localhost:3001',
+                'serverPublic' => 'http://localhost:8000',
+                'devServerInternal' => 'http://craft-campaign-buildchain:3001',
+                'checkDevServer' => true,
+            ],
+        ];
+
+        parent::__construct($id, $parent, $config);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function editions(): array
     {
         return [
@@ -157,7 +195,10 @@ class Campaign extends Plugin
             function(Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('campaign', CampaignVariable::class);
+                $variable->set('campaign', [
+                    'class' => CampaignVariable::class,
+                    'viteService' => $this->vite,
+                ]);
             }
         );
 
@@ -458,26 +499,6 @@ class Campaign extends Plugin
      */
     private function _registerComponents()
     {
-        // Register services as components
-        $this->setComponents([
-            'campaigns' => CampaignsService::class,
-            'campaignTypes' => CampaignTypesService::class,
-            'contacts' => ContactsService::class,
-            'exports' => ExportsService::class,
-            'forms' => FormsService::class,
-            'imports' => ImportsService::class,
-            'mailingLists' => MailingListsService::class,
-            'mailingListTypes' => MailingListTypesService::class,
-            'pendingContacts' => PendingContactsService::class,
-            'reports' => ReportsService::class,
-            'segments' => SegmentsService::class,
-            'sendouts' => SendoutsService::class,
-            'settings' => SettingsService::class,
-            'sync' => SyncService::class,
-            'tracker' => TrackerService::class,
-            'webhook' => WebhookService::class,
-        ]);
-
         // Register mailer component
         $this->set('mailer', function() {
             return $this->createMailer();

@@ -2,6 +2,13 @@
 
 {% do view.registerAssetBundle('putyourlightson\\campaign\\assets\\CampaignAsset') %}
 
+{% set scriptTagOptions = {
+    'depends': [
+        'putyourlightson\\campaign\\assets\\CampaignAsset'
+    ],
+} %}
+{% do craft.campaign.register('/src/js/app.ts', false, scriptTagOptions) %}
+
 {% js %}
     Craft.publishableCampaignTypes = [
         {% for campaignType in craft.campaign.getAllCampaignTypes() %}

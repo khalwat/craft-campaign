@@ -1,4 +1,4 @@
 /**
  * Campaign class
  */
-Campaign = {};
+window.Campaign = {};

@@ -1,0 +1,11 @@
+declare module "app";
+declare module "Campaign";
+declare module "CampaignEdit";
+declare module "CampaignIndex";
+declare module "ContactEdit";
+declare module "Cp";
+declare module "MailingListIndex";
+declare module "SegmentEdit";
+declare module "SegmentIndex";
+declare module "SendoutEdit";
+declare module "SendoutIndex";
